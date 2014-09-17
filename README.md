@@ -1,6 +1,6 @@
 WebAppTemplate
 ==============
-Starting template for web application.
+Starting template for web applications.
 
 - jquery
 - angularjs
