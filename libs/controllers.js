@@ -31,21 +31,14 @@ appControllers.controller('loginController', [
 		$scope.credentials = { username: "", password: "" };
 
 		$scope.attemptLogin = function() {
-			/*
-			doAuth($scope.credentials, function(data) {		
-				
-				if(!data.hasOwnProperty('error')) {
-					
-					console.info("Setting session creds...");
-					$window.sessionStorage['credentials'] = JSON.stringify($scope.credentials);
+			if(Authenticator.login($scope.credentials)) {
 
-					if($routeParams.redirect) $location.url($routeParams.redirect);
-					else $location.url(defaultPage);
-				} else {
-					$("#login-window-header").html("<span>Auth failed : "+data.error+"!</span>");
-				}
-			});
-			*/
+				if($routeParams.redirect) $location.url($routeParams.redirect);
+				else $location.url(defaultPage);
+			} else {
+
+				$("#login-window-header").html("<span>Auth failed!</span>");
+			}
 		}
 
 		function _initialize() {

@@ -1,6 +1,39 @@
 
 var appServices = angular.module('appServices', []);
 
+appServices.factory('Authenticator', ['$window', '$http', '$location', function($window, $http, $location) {
+    var Authenticator = {
+        login: function(creds) {
+            // do actual auth here //
+            if(creds.username === "guest" && creds.password === "guest") {
+                $window.sessionStorage['credentials'] = JSON.stringify(creds);
+                return true;
+            }
+            return false;
+        },
+        sessionIsAuthenticated: function() {
+            if($window.sessionStorage['credentials']) {
+
+                var creds = JSON.parse($window.sessionStorage['credentials']);
+                if(creds.username && creds.username !== "" && creds.password && creds.password !== "") {
+                    // do custom checking here
+                    return true
+                }
+            }
+            return false;
+        },
+        logout: function() {
+            var sStor = $window.sessionStorage;
+            if(sStor['credentials']) {
+                delete sStor['credentials'];
+            }
+            $location.url("/login");
+        }
+    };
+
+    return (Authenticator);
+}]);
+
 appServices.factory('ConfigManager', ['$http', function($http) {
 
     var _config = null;
