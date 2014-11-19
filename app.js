@@ -13,8 +13,12 @@ app.config(['$routeProvider',
 			when('/login', {
 				templateUrl: 'partials/login.html',
 				controller: 'loginController'
-			})
-			.otherwise({
+			}).
+			when('/', {
+				templateUrl: 'partials/root.html',
+				controller: 'rootController'
+			}).
+			otherwise({
 				redirectTo: '/login'
 			});
 	}

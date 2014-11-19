@@ -1,6 +1,16 @@
 
 var appControllers = angular.module('appControllers', []);
 
+appControllers.controller('rootController', [ '$window', '$location', '$scope', 'Authenticator',
+	function($window, $location, $scope, Authenticator) {
+		
+		Authenticator.checkAuthOrRedirect("/");
+		
+		$scope.pageHeaderHtml = "/partials/page-header.html";
+
+	}
+]);
+
 appControllers.controller('defaultController', [ '$window', '$location', '$scope', 
 	function($window, $location, $scope) {
 
@@ -25,8 +35,10 @@ appControllers.controller('defaultController', [ '$window', '$location', '$scope
 ]);
 
 appControllers.controller('loginController', [
-	'$scope', '$window', '$routeParams', '$location',
-	function($scope, $window, $routeParams, $location) {
+	'$scope', '$window', '$routeParams', '$location', 'Authenticator',
+	function($scope, $window, $routeParams, $location, Authenticator) {
+		
+		var defaultPage = "/";
 		
 		$scope.credentials = { username: "", password: "" };
 

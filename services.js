@@ -2,33 +2,45 @@
 var appServices = angular.module('appServices', []);
 
 appServices.factory('Authenticator', ['$window', '$http', '$location', function($window, $http, $location) {
-    var Authenticator = {
-        login: function(creds) {
-            // do actual auth here //
-            if(creds.username === "guest" && creds.password === "guest") {
-                $window.sessionStorage['credentials'] = JSON.stringify(creds);
-                return true;
-            }
-            return false;
-        },
-        sessionIsAuthenticated: function() {
-            if($window.sessionStorage['credentials']) {
+    
+	function _sessionIsAuthenticated() {
+		if($window.sessionStorage['credentials']) {
 
-                var creds = JSON.parse($window.sessionStorage['credentials']);
-                if(creds.username && creds.username !== "" && creds.password && creds.password !== "") {
-                    // do custom checking here
-                    return true
-                }
-            }
-            return false;
-        },
-        logout: function() {
-            var sStor = $window.sessionStorage;
-            if(sStor['credentials']) {
-                delete sStor['credentials'];
-            }
-            $location.url("/login");
-        }
+			var creds = JSON.parse($window.sessionStorage['credentials']);
+			if(creds.username && creds.username !== "" && creds.password && creds.password !== "") {
+				// do custom checking here
+				return true
+			}
+		}
+		return false;
+	}
+	
+	function _login(creds) {
+		// do actual auth here //
+		if(creds.username === "guest" && creds.password === "guest") {
+			$window.sessionStorage['credentials'] = JSON.stringify(creds);
+			return true;
+		}
+		return false;
+	}
+	
+	function _logout() {
+		var sStor = $window.sessionStorage;
+		if(sStor['credentials']) {
+			delete sStor['credentials'];
+		}
+		$location.url("/login");
+	}
+	
+	var Authenticator = {
+        login                 : _login,
+        logout                : _logout,
+		sessionIsAuthenticated: _sessionIsAuthenticated,
+		checkAuthOrRedirect   : function(redirectTo) {
+			
+			if(!_sessionIsAuthenticated())
+                $location.url("/login?redirect="+redirectTo);	
+		}
     };
 
     return (Authenticator);
