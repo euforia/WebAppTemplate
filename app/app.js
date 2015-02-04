@@ -9,18 +9,15 @@ var app = angular.module('app', [
 
 app.config(['$routeProvider',
 	function($routeProvider) {
-		$routeProvider.
-			when('/login', {
-				templateUrl: 'partials/login.html',
-				controller: 'loginController'
-			}).
-			when('/', {
-				templateUrl: 'partials/root.html',
-				controller: 'rootController'
-			}).
-			otherwise({
-				redirectTo: '/login'
-			});
+		$routeProvider.when('/login', {
+			templateUrl: 'partials/login.html',
+			controller: 'loginController'
+		}).when('/', {
+			templateUrl: 'partials/root.html',
+			controller: 'rootController'
+		}).otherwise({
+			redirectTo: '/login'
+		});
 	}
 ]);
 
