@@ -1,7 +1,5 @@
-
-var appDirectives = angular.module('appDirectives', [])
-
-appDirectives.directive('appStage', ['$window', function($window) {
+angular.module('appDirectives', [])
+.directive('appStage', ['$window', function($window) {
 	return {
 		restrict: 'A',
 		require: '?ngModel',

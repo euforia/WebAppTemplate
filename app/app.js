@@ -4,7 +4,9 @@ var app = angular.module('app', [
 	'appDirectives',
 	'appFactories',
 	'appControllers',
-	'appServices'
+	'appServices',
+    'pageheader',
+    'login'
 ]);
 
 (function() {
@@ -37,7 +39,7 @@ var app = angular.module('app', [
 app.config(['$routeProvider',
 	function($routeProvider) {
 		$routeProvider.when('/login', {
-			templateUrl: 'partials/login.html',
+			templateUrl: 'app/login/login.html',
 			controller: 'loginController'
 		}).when('/', {
 			templateUrl: 'partials/root.html',
@@ -52,4 +54,24 @@ app.filter('objectLength', function() {
 	return function(obj) {
     	return Object.keys(obj).length;
 	};
+})
+.filter('toHumanBytes', function() {
+    return function(fileSize) {
+        var kb  = fileSize/1024;
+        if(kb < 1024) {
+            return kb.toFixed(2).toString() +" KB";
+        }
+
+        var mb = kb/1024;
+        if(mb < 1024) {
+            return mb.toFixed(2).toString() +" MB";
+        }
+
+        var gb = mb/1024;
+        if(gb < 1024) {
+            return gb.toFixed(2).toString() +" GB";
+        }
+
+        return (gb/1024).toFixed(2).toString()+" TB";
+    }
 });

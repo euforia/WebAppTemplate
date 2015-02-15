@@ -17,10 +17,12 @@
 		<script type="text/javascript" src="app/factories.js"></script>
 		<script type="text/javascript" src="app/controllers.js"></script>
 		<script type="text/javascript" src="app/services.js"></script>
+		<script type="text/javascript" src="app/login/Login.js"></script>
+		<script type="text/javascript" src="app/pageheader/PageHeader.js"></script>
 	</head>
 	<body>
 		<div id="stage" ng-controller="defaultController" app-stage>
-			<ng-include src="pageHeaderHtml"></ng-include>
+			<div page-header-ui></div>
 			<div style="overflow-y:scroll" ng-view></div>
 		</div>
 	</body>
